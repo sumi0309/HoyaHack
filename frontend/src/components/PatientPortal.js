@@ -20,6 +20,9 @@ import API from "../api";
 import TimelineComponent from "./Timeline";
 
 const PatientPortal = () => {
+  const [symptoms, setSymptoms] = useState("");
+  const [diagnosis, setDiagnosis] = useState("");
+  const [prescription, setPrescription] = useState("");
   const [option, setOption] = useState(""); // 'new' or 'existing'
   const [form, setForm] = useState({
     patientId: "",

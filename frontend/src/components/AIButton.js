@@ -1,19 +1,55 @@
 import React, { useState } from "react";
-import { Button, Modal, Typography, Box } from "@mui/material";
+import {
+  Button,
+  Modal,
+  Typography,
+  Box,
+  CircularProgress,
+} from "@mui/material";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const AIButton = () => {
+const AIButton = ({ symptoms, diagnosis, prescription }) => {
   const [aiModalOpen, setAiModalOpen] = useState(false);
   const [aiAnalysis, setAiAnalysis] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleAiAnalysis = () => {
-    const randomParagraphs = [
-      "AI analysis reveals potential early warning signs. Consult your doctor for more details.",
-      "Machine learning algorithms detected a unique pattern in the diagnostic data.",
-      "Advanced algorithms found no anomalies in the diagnostic timeline. All clear!",
-    ];
-    const randomIndex = Math.floor(Math.random() * randomParagraphs.length);
-    setAiAnalysis(randomParagraphs[randomIndex]);
+  const handleAiAnalysis = async () => {
+    // Prepare the prompt for the API
+    const prompt = `
+Hi! Welcome to Byte Doctor :)
+Here's the analysis based on the symptoms and preliminary diagnosis you provided:
+
+1. I’ll list the most likely conditions and my confidence in each.
+2. I’ll evaluate how accurate the doctor’s diagnosis might be.
+3. I’ll evaluate the medications the doctor prescribed and give my thoughts and provide quick recommendations for the next steps if needed.
+
+Your Details:
+- Symptoms: ${symptoms}
+- Preliminary Diagnosis: ${diagnosis}
+- Prescribed Medication: ${prescription}
+
+Please keep the analysis concise and easy to understand, no more than 10 lines and address the patient directly as "you".
+`;
+
+    setLoading(true);
     setAiModalOpen(true);
+
+    try {
+      // Initialize Gemini API
+      const genAI = new GoogleGenerativeAI(
+        "AIzaSyBcWacgQfyANGLMbEAXf21g2uxGkW12ON8"
+      );
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+      // Send the prompt to the API
+      const result = await model.generateContent(prompt);
+      setAiAnalysis(result.response.text()); // Update the modal with the API response
+    } catch (error) {
+      console.error("Error during AI analysis:", error);
+      setAiAnalysis("An error occurred while processing the analysis.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -57,7 +93,11 @@ const AIButton = () => {
           >
             AI Analysis
           </Typography>
-          <Typography id="ai-modal-description">{aiAnalysis}</Typography>
+          {loading ? (
+            <CircularProgress />
+          ) : (
+            <Typography id="ai-modal-description">{aiAnalysis}</Typography>
+          )}
           <Button
             variant="contained"
             color="primary"

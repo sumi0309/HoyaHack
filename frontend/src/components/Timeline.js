@@ -72,7 +72,11 @@ const TimelineComponent = ({ diagnoses, showAIButton }) => {
                   </Grid>
                   {showAIButton && (
                     <Grid item xs={12} md={3}>
-                      <AIButton /> {/* AIButton rendered conditionally */}
+                      <AIButton
+                        symptoms={diag.symptoms}
+                        diagnosis={diag.doctorDiagnosis}
+                        prescription={diag.prescription}
+                      />
                     </Grid>
                   )}
                 </Grid>
