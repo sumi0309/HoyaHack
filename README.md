@@ -81,12 +81,3 @@ Our roadmap includes:
 - MongoDB
 - npm or yarn
 
-### Installation
-1. Clone the repository:
-```bash
-git clone https://github.com/praveendran-tech/HoyaHack.git
-cd HoyaHack
-
-This README.md provides a comprehensive overview of the Byte Doctor project, capturing its innovative features, technical implementation, and future roadmap. It maintains a professional tone while being informative and user-friendly. The structure follows standard documentation practices and includes all necessary information for both users and potential contributors.
-
-Would you like me to expand on any particular section or add more specific technical details?
