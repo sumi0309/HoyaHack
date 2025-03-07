@@ -16,19 +16,21 @@ const AIButton = ({ symptoms, diagnosis, prescription }) => {
   const handleAiAnalysis = async () => {
     // Prepare the prompt for the API
     const prompt = `
-Hi! Welcome to Byte Doctor :)
+    This is the system: 
+Hi! Welcome to Byte Doctor.
 Here's the analysis based on the symptoms and preliminary diagnosis you provided:
 
-1. I’ll list the most likely conditions and my confidence in each.
-2. I’ll evaluate how accurate the doctor’s diagnosis might be.
-3. I’ll evaluate the medications the doctor prescribed and give my thoughts and provide quick recommendations for the next steps if needed.
+1. I’ll (Gemini) list the most likely conditions and my confidence in each.
+2. I’ll (Gemini) evaluate how accurate the doctor’s diagnosis might be.
+3. I’ll (Gemini) evaluate the medications the doctor prescribed and give my thoughts and provide quick recommendations for the next steps if needed.
 
 Your Details:
 - Symptoms: ${symptoms}
-- Preliminary Diagnosis: ${diagnosis}
-- Prescribed Medication: ${prescription}
+- Preliminary Diagnosis by your doctor: ${diagnosis}
+- Prescribed Medication by your doctor: ${prescription}
 
-Please keep the analysis concise and easy to understand, no more than 10 lines and address the patient directly as "you".
+Now generate a response and keep in mind that you have to finally state two things: 1. The diagnosis provided is correct or not, 2. Should you seek another consultation.
+Please keep the analysis concise and easy to understand, no more than 10 lines and address the patient directly as "you". Also, I will be displaying this to the patient so do not include any * or ** or something.
 `;
 
     setLoading(true);
@@ -36,14 +38,16 @@ Please keep the analysis concise and easy to understand, no more than 10 lines a
 
     try {
       // Initialize Gemini API
+      console.log(process.env.GOOGLE_API);
       const genAI = new GoogleGenerativeAI(
-        "AIzaSyBcWacgQfyANGLMbEAXf21g2uxGkW12ON8"
+        process.env.REACT_APP_GOOGLE_API_KEY
       );
+      console.log(process.env.GOOGLE_API);
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
       // Send the prompt to the API
       const result = await model.generateContent(prompt);
-      setAiAnalysis(result.response.text()); // Update the modal with the API response
+      setAiAnalysis(result.response.text);
     } catch (error) {
       console.error("Error during AI analysis:", error);
       setAiAnalysis("An error occurred while processing the analysis.");

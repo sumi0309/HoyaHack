@@ -35,7 +35,7 @@ const TimelineComponent = ({ diagnoses, showAIButton }) => {
                 <Grid container spacing={2} alignItems="center">
                   <Grid item xs={12} md={9}>
                     <Typography variant="h6" component="span">
-                      Diagnosis by Dr. {diag.doctor.name} (ID:{" "}
+                      Diagnosis by {diag.doctor.name} (ID:{" "}
                       {diag.doctor.doctorId})
                     </Typography>
                     <Typography variant="body1">
