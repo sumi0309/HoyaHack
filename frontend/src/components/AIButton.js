@@ -38,7 +38,6 @@ Please keep the analysis concise and easy to understand, no more than 10 lines a
 
     try {
       // Initialize Gemini API
-      console.log(process.env.GOOGLE_API);
       const genAI = new GoogleGenerativeAI(
         process.env.REACT_APP_GOOGLE_API_KEY
       );
