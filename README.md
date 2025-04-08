@@ -9,7 +9,7 @@ ByteDoctor leverages advanced AI to analyze doctors' diagnoses, prescriptions, a
 ## How We Built It
 We built ByteDoctor by leveraging **Gemini 1.5 Flash** to analyze diagnoses, symptoms, and prescriptions, enabling it to provide insightful guidance on whether a second opinion might be necessary. The platform ensures secure storage of medical records and real-time AI-driven analysis.
 
-- **Backend:** Node.js  
+- **Backend:** Express.js  
 - **Frontend:** React  
 - **Database:** MongoDB Atlas  
 - **AI Integration:** Gemini 1.5 Flash  
